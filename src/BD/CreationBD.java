@@ -137,5 +137,25 @@ public class CreationBD {
                 "PRIMARY KEY(id_message)," +
                 "FOREIGN KEY(id_membre_envoyeur) REFERENCES Membre(id_membre)," +
                 "FOREIGN KEY(id_membre_destinataire) REFERENCES Membre(id_membre))");
+
+        creationTable(NOMDB, "CREATE TABLE Document(" +
+                "id_document INT NOT NULL," +
+                "id_projet INT NOT NULL," +
+                "id_membre_upload INT NOT NULL," +
+                "chemin_document VARCHAR(150)," +
+                "contenu BLOB," +
+                "PRIMARY KEY(id_document)," +
+                "FOREIGN KEY (id_projet) REFERENCES Projet(id_projet)," +
+                "FOREIGN KEY (id_membre_upload) REFERENCES Membre(id_membre))");
+
+        creationTable(NOMDB, "CREATE TABLE Authentification(" +
+                "id_auth INT NOT NULL," +
+                "id_membre INT NOT NULL," +
+                "nom_utilisateur VARCHAR(50) DEFAULT 'Anonyme' NOT NULL," +
+                "mdp VARCHAR(64) NOT NULL," +
+                "est_connecte BOOLEAN NOT NULL," +
+                "est_admin BOOLEAN NOT NULL DEFAULT 'false'," +
+                "PRIMARY KEY(id_auth)," +
+                "FOREIGN KEY(id_membre) REFERENCES Membre(id_membre))");
     }
 }
