@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CommunicationPrivee extends Entite {
 
@@ -33,7 +35,7 @@ public class CommunicationPrivee extends Entite {
                 String sql = "INSERT INTO CommunicationPrivee (id_message, id_membre_envoyeur, id_membre_destinataire, contenu, date_envoi) VALUES (?, ?, ?, ?, ?)";
 
                 try (PreparedStatement s = connexion.prepareStatement(sql)) {
-                    s.setInt(1, getId());
+                    s.setInt(1, getId(nomDB, "CommunicationPrivee"));
                     s.setInt(2, idMembreEnvoyeur);
                     s.setInt(3, idMembreDestinataire);
                     s.setString(4, contenu);

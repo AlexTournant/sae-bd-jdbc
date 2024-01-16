@@ -5,6 +5,8 @@ import BD.CreationBD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Objectif extends Entite {
 
@@ -38,7 +40,7 @@ public class Objectif extends Entite {
                 String sql = "INSERT INTO Objectif (id_objectif, id_projet, description, est_realise) VALUES (?, ?, ?, ?)";
 
                 try (PreparedStatement s = connexion.prepareStatement(sql)) {
-                    s.setInt(1, getId());
+                    s.setInt(1, getId(nomDB, "Objectif"));
                     s.setInt(2, idProjet);
                     s.setString(3, description);
                     s.setBoolean(4, estRealise);

@@ -5,18 +5,18 @@ import BD.CreationBD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Membre extends Entite {
 
     private String nom;
     private String prenom;
-    private boolean estResponsable;
 
-    public Membre(int id, String nom, String prenom, boolean estResponsable) {
+    public Membre(int id, String nom, String prenom) {
         super(id);
         this.nom = nom;
         this.prenom = prenom;
-        this.estResponsable = estResponsable;
     }
 
     @Override
@@ -24,7 +24,6 @@ public class Membre extends Entite {
         return "Membre{" +
                 "nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
-                ", estResponsable=" + estResponsable +
                 '}';
     }
 
@@ -35,13 +34,12 @@ public class Membre extends Entite {
             connexion = CreationBD.connexionBD(nomDB);
 
             if (!isInDatabase(nomDB, "Membre")) {
-                String sql = "INSERT INTO Membre (id_membre, nom, prenom, est_responsable) VALUES (?, ?, ?, ?)";
+                String sql = "INSERT INTO Membre (id_membre, nom, prenom) VALUES (?, ?, ?)";
 
                 try (PreparedStatement s = connexion.prepareStatement(sql)) {
-                    s.setInt(1, getId());
+                    s.setInt(1, getId(nomDB, "Membre"));
                     s.setString(2, nom);
                     s.setString(3, prenom);
-                    s.setBoolean(4, estResponsable);
 
                     s.executeUpdate();
                 }

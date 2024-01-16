@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Document extends Entite {
 
@@ -41,7 +43,7 @@ public class Document extends Entite {
                 String sql = "INSERT INTO Document (id_document, id_projet, id_membre_upload, chemin_document, contenu) VALUES (?, ?, ?, ?, ?)";
 
                 try (PreparedStatement s = connexion.prepareStatement(sql)) {
-                    s.setInt(1, getId());
+                    s.setInt(1, getId(nomDB, "Document"));
                     s.setInt(2, id_projet);
                     s.setInt(3, id_membre_upload);
                     s.setString(4, chemin_document);

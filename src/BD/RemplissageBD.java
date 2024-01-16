@@ -7,17 +7,22 @@ public class RemplissageBD {
 
     public static int remplir(String nomDB, String nomTable, String[] informations) {
         Connection connexion = null;
-        Statement requete = null;
+        PreparedStatement preparedStatement = null;
         try {
             connexion = CreationBD.connexionBD(nomDB);
-            StringBuilder chaine = new StringBuilder("INSERT INTO "+ nomTable + " VALUES(");
-            for (int i = 0;i < informations.length-1;i++) {
-                chaine.append(informations[i] + " ,");
+            StringBuilder queryBuilder = new StringBuilder("INSERT INTO ").append(nomTable).append(" VALUES (");
+            for (int i = 0; i < informations.length - 1; i++) {
+                queryBuilder.append("?, ");
             }
-            chaine.append(informations[informations.length - 1] + ")");
-            System.out.println(chaine.toString());
-            requete = connexion.createStatement();
-            return requete.executeUpdate(chaine.toString());
+            queryBuilder.append("?)");
+            preparedStatement = connexion.prepareStatement(queryBuilder.toString());
+            for (int i = 0; i < informations.length; i++) {
+                preparedStatement.setString(i + 1, informations[i]);
+            }
+
+            System.out.println(preparedStatement.toString()); // Affichage de la requête (à des fins de débogage)
+
+            return preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -25,12 +30,11 @@ public class RemplissageBD {
             return -1;
         } finally {
             try {
-                if (requete != null) requete.close();
+                if (preparedStatement != null) preparedStatement.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
             CreationBD.fermerConnexion(connexion);
         }
-
     }
 }

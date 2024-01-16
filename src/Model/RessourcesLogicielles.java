@@ -5,6 +5,8 @@ import BD.CreationBD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RessourcesLogicielles extends Entite {
 
@@ -38,7 +40,7 @@ public class RessourcesLogicielles extends Entite {
                 String sql = "INSERT INTO RessourcesLogicielles (id_ressource_log, id_projet, nom_ressource_log, version) VALUES (?, ?, ?, ?)";
 
                 try (PreparedStatement s = connexion.prepareStatement(sql)) {
-                    s.setInt(1, getId());
+                    s.setInt(1, getId(nomDB, "RessourcesLogicielles"));
                     s.setInt(2, idProjet);
                     s.setString(3, nomRessourceLog);
                     s.setString(4, version);
@@ -55,5 +57,4 @@ public class RessourcesLogicielles extends Entite {
             CreationBD.fermerConnexion(connexion);
         }
     }
-
 }

@@ -3,15 +3,19 @@ package Model;
 import BD.CreationBD;
 
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Projet extends Entite {
-    String sujet;
-    String technologiesUtilisees;
-    Date dateDebut;
-    Date dateFin;
+    private String nom_projet;
+    private String sujet;
+    private String technologiesUtilisees;
+    private Date dateDebut;
+    private Date dateFin;
 
-    public Projet(int id, String sujet, String technologiesUtilisees, Date dateDebut, Date dateFin) {
+    public Projet(int id, String nom_projet, String sujet, String technologiesUtilisees, Date dateDebut, Date dateFin) {
         super(id);
+        this.nom_projet = nom_projet;
         this.sujet = sujet;
         this.technologiesUtilisees = technologiesUtilisees;
         this.dateDebut = dateDebut;
@@ -21,6 +25,7 @@ public class Projet extends Entite {
     @Override
     public String toString() {
         return "Projet{" +
+                "nom_projet=" + nom_projet + '\'' +
                 "sujet='" + sujet + '\'' +
                 ", technologies_utilisees='" + technologiesUtilisees + '\'' +
                 ", date_debut=" + dateDebut +
@@ -30,32 +35,29 @@ public class Projet extends Entite {
 
 
     @Override
-    public void ajoutBD(String nomDB) {
+    public void ajoutBD(String nomDB) throws SQLException {
+
         Connection connexion = null;
         try {
             connexion = CreationBD.connexionBD(nomDB);
-            if (!isInDatabase(nomDB, "Projet")) {
-                String sql = "INSERT INTO Projet (id_projet, sujet, technologies_utilisees, date_debut, date_fin) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO Projet (id_projet, nom_projet, sujet, technologies_utilisees, date_debut, date_fin) VALUES (?, ?, ?, ?, ?, ?)";
+            System.out.println(sql);
+            try (PreparedStatement s = connexion.prepareStatement(sql)) {
+                s.setInt(1, getId(nomDB, "Projet"));
+                s.setString(2, this.nom_projet);
+                s.setString(3, this.sujet);
+                s.setString(4, this.technologiesUtilisees);
+                s.setDate(5, this.dateDebut);
+                s.setDate(6, this.dateFin);
 
-                try (PreparedStatement s = connexion.prepareStatement(sql)) {
-                    s.setInt(1, getId());
-                    s.setString(2, sujet);
-                    s.setString(3, technologiesUtilisees);
-                    s.setDate(4, dateDebut);
-                    s.setDate(5, dateFin);
+                s.executeUpdate();
 
-                    s.executeUpdate();
-                }
-            } else {
-                System.out.println("Le projet existe déjà dans la base de données.");
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             CreationBD.fermerConnexion(connexion);
         }
+
     }
-
-
 }
