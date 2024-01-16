@@ -45,8 +45,24 @@ public class Requetes {
         }
         return false;
     }
-		
+	
+	public static void etatActuelProjet(String nomBD, int idProjet) {
+		Connection connexion = null;
+        try {
+            connexion = CreationBD.connexionBD(nomDB);
+            var query = connexion.prepareStatement("SELECT DISTINCT id_objectif, est_realise FROM Objectif WHERE id_projet = " + idProjet);
+            ResultSet res = query.executeQuery();
+            while(res.next()){
+                System.out.println(res.getInt("id") + " " + res.getBoolean("est_realise"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+            System.exit(1);
+        } finally {
+            CreationBD.fermerConnexion(connexion);
+        }
 	}
+		
 	
 	
 /* Exemples
