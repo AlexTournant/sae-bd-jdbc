@@ -6,8 +6,6 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class CommunicationForum extends Entite {
 
@@ -31,7 +29,7 @@ public class CommunicationForum extends Entite {
             connexion = CreationBD.connexionBD(nomDB);
 
             if (!isInDatabase(nomDB, "CommunicationForum")) {
-                String sql = "INSERT INTO CommunicationForum (id_message, id_projet, id_membre_envoyeur, contenu, date_envoi) VALUES (?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO CommunicationForum (id, id_projet, id_membre_envoyeur, contenu, date_envoi) VALUES (?, ?, ?, ?, ?)";
 
                 try (PreparedStatement s = connexion.prepareStatement(sql)) {
                     s.setInt(1, getId(nomDB, "CommunicationForum"));

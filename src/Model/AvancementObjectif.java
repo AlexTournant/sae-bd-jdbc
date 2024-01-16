@@ -5,8 +5,6 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class AvancementObjectif extends Entite{
@@ -36,7 +34,7 @@ public class AvancementObjectif extends Entite{
         try {
             connexion = CreationBD.connexionBD(nomDB);
             if (!isInDatabase(nomDB, "AvancementObjectif")) {
-                String sql = "INSERT INTO AvancementObjectif (idAvancement, idObjectif, dateMaj, avancement) VALUES (?, ?, ?, ?)";
+                String sql = "INSERT INTO AvancementObjectif (id, idObjectif, dateMaj, avancement) VALUES (?, ?, ?, ?)";
 
                 try (PreparedStatement s = connexion.prepareStatement(sql)) {
                     s.setInt(1, getId(nomDB, "AvancementObjectif"));

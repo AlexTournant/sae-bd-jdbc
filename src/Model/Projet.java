@@ -3,8 +3,6 @@ package Model;
 import BD.CreationBD;
 
 import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Projet extends Entite {
     private String nom_projet;
@@ -40,7 +38,7 @@ public class Projet extends Entite {
         Connection connexion = null;
         try {
             connexion = CreationBD.connexionBD(nomDB);
-            String sql = "INSERT INTO Projet (id_projet, nom_projet, sujet, technologies_utilisees, date_debut, date_fin) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO Projet (id, nom_projet, sujet, technologies_utilisees, date_debut, date_fin) VALUES (?, ?, ?, ?, ?, ?)";
             System.out.println(sql);
             try (PreparedStatement s = connexion.prepareStatement(sql)) {
                 s.setInt(1, getId(nomDB, "Projet"));

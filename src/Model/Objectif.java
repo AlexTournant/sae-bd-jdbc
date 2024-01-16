@@ -5,8 +5,6 @@ import BD.CreationBD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Objectif extends Entite {
 
@@ -35,20 +33,15 @@ public class Objectif extends Entite {
         Connection connexion = null;
         try {
             connexion = CreationBD.connexionBD(nomDB);
+            String sql = "INSERT INTO Objectif (id, id_projet, description, est_realise) VALUES (?, ?, ?, ?)";
 
-            if (!isInDatabase(nomDB, "Objectif")) {
-                String sql = "INSERT INTO Objectif (id_objectif, id_projet, description, est_realise) VALUES (?, ?, ?, ?)";
+            try (PreparedStatement s = connexion.prepareStatement(sql)) {
+                s.setInt(1, getId(nomDB, "Objectif"));
+                s.setInt(2, idProjet);
+                s.setString(3, description);
+                s.setBoolean(4, estRealise);
 
-                try (PreparedStatement s = connexion.prepareStatement(sql)) {
-                    s.setInt(1, getId(nomDB, "Objectif"));
-                    s.setInt(2, idProjet);
-                    s.setString(3, description);
-                    s.setBoolean(4, estRealise);
-
-                    s.executeUpdate();
-                }
-            } else {
-                System.out.println("L'objectif existe déjà dans la base de données.");
+                s.executeUpdate();
             }
 
         } catch (SQLException e) {

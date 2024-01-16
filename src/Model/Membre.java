@@ -5,8 +5,6 @@ import BD.CreationBD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Membre extends Entite {
 
@@ -34,12 +32,12 @@ public class Membre extends Entite {
             connexion = CreationBD.connexionBD(nomDB);
 
             if (!isInDatabase(nomDB, "Membre")) {
-                String sql = "INSERT INTO Membre (id_membre, nom, prenom) VALUES (?, ?, ?)";
+                String sql = "INSERT INTO Membre (id, nom, prenom) VALUES (?, ?, ?)";
 
                 try (PreparedStatement s = connexion.prepareStatement(sql)) {
                     s.setInt(1, getId(nomDB, "Membre"));
-                    s.setString(2, nom);
-                    s.setString(3, prenom);
+                    s.setString(2, this.nom);
+                    s.setString(3, this.prenom);
 
                     s.executeUpdate();
                 }

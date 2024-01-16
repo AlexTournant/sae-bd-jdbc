@@ -3,7 +3,6 @@ package Model;
 import BD.CreationBD;
 
 import java.sql.*;
-import java.util.Map;
 
 public abstract class Entite {
 
@@ -21,7 +20,7 @@ public abstract class Entite {
         Connection connexion = null;
         try {
             connexion = CreationBD.connexionBD(nomDB);
-            var query = connexion.prepareStatement("SELECT DISTINCT * FROM " + nomTable + " WHERE id_projet = ?");
+            var query = connexion.prepareStatement("SELECT DISTINCT * FROM " + nomTable + " WHERE id = ?");
             query.setInt(1, id);
             var resultSet = query.executeQuery();
             return resultSet.next();
@@ -44,7 +43,7 @@ public abstract class Entite {
                  ResultSet resultSet = statement.executeQuery()) {
 
                 if (resultSet.next()) {
-                    return resultSet.getInt(1); // La première colonne du résultat est le nombre d'enregistrements
+                    return resultSet.getInt(1) + 1;
                 }
             }
         } catch (SQLException e) {
