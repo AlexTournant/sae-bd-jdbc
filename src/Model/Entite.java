@@ -3,6 +3,7 @@ package Model;
 import BD.CreationBD;
 
 import java.sql.*;
+import java.util.Map;
 
 public abstract class Entite {
 
@@ -17,29 +18,40 @@ public abstract class Entite {
     }
 
     public boolean isInDatabase(String nomDB, String nomTable) throws SQLException {
-        try (Connection connexion = CreationBD.connexionBD(nomDB);
-             PreparedStatement query = connexion.prepareStatement("SELECT DISTINCT * FROM " + nomTable + " WHERE ID = ?")) {
-
+        Connection connexion = null;
+        try {
+            connexion = CreationBD.connexionBD(nomDB);
+            var query = connexion.prepareStatement("SELECT DISTINCT * FROM " + nomTable + " WHERE id_projet = ?");
             query.setInt(1, id);
-            ResultSet resultSet = query.executeQuery();
+            var resultSet = query.executeQuery();
             return resultSet.next();
-
         } catch (SQLException e){
             e.printStackTrace();
-            throw new RuntimeException("Erreur lors de la vérification de l'existence dans la base de données.", e);
+            System.exit(1);
+            return false;
         }
     }
 
-    public abstract void ajoutBD(String nomDB);
+    public abstract void ajoutBD(String nomDB) throws SQLException;
 
-    void ajoutEntiteCourant(Statement s, String nomTable) throws SQLException {
+    public static int getId(String nomDB, String nomTable) {
+        Connection connexion = null;
         try {
-            ResultSet rs = s.executeQuery("SELECT MAX(id) FROM " + nomTable);
-            rs.next();
-            int i = rs.getInt(1) + 1;
-            s.executeUpdate("INSERT INTO " + nomTable + "(id) VALUES " + Integer.toString(i));
+            connexion = CreationBD.connexionBD(nomDB);
+            String sql = "SELECT COUNT(*) FROM " + nomTable;
+
+            try (PreparedStatement statement = connexion.prepareStatement(sql);
+                 ResultSet resultSet = statement.executeQuery()) {
+
+                if (resultSet.next()) {
+                    return resultSet.getInt(1); // La première colonne du résultat est le nombre d'enregistrements
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            CreationBD.fermerConnexion(connexion);
         }
+        return 0;
     }
 }

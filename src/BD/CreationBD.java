@@ -1,7 +1,7 @@
 package BD;
 
 import java.sql.*;
-
+import Model.*;
 public class CreationBD {
 
     public static final String NOMDB = "DB-SAE";
@@ -64,24 +64,24 @@ public class CreationBD {
 
 
         creationTable(NOMDB,"CREATE TABLE Projet("
-                + "id_projet INT NOT NULL,"
-                + "sujet VARCHAR(100) NOT NULL,"
-                + "technologies_utilisees VARCHAR(50) NOT NULL,"
-                + "date_debut DATE NOT NULL,"
-                + "date_fin DATE NOT NULL,"
+                + "id_projet INT NOT NULL," +
+                "nom_projet VARCHAR(50) ,"
+                + "sujet VARCHAR(100) ,"
+                + "technologies_utilisees VARCHAR(50) ,"
+                + "date_debut DATE ,"
+                + "date_fin DATE,"
                 + "PRIMARY KEY(id_projet))");
 
         creationTable(NOMDB, "CREATE TABLE Membre(" +
                 "id_membre INT NOT NULL," +
                 "nom VARCHAR(100)," +
                 "prenom VARCHAR(100)," +
-                "est_responsable BOOLEAN NOT NULL," +
                 "PRIMARY KEY(id_membre))");
 
         creationTable(NOMDB, "CREATE TABLE ProjetMembre(" +
                 "id_projet INT NOT NULL," +
                 "id_membre INT NOT NULL," +
-                "est_responsable BOOLEAN NOT NULL," +
+                "est_responsable BOOLEAN ," +
                 "PRIMARY KEY(id_projet, id_membre)," +
                 "FOREIGN KEY(id_projet) REFERENCES Projet(id_projet)," +
                 "FOREIGN KEY(id_membre) REFERENCES Membre(id_membre))");
@@ -89,24 +89,24 @@ public class CreationBD {
         creationTable(NOMDB, "CREATE TABLE Objectif(" +
                 "id_objectif INT NOT NULL," +
                 "id_projet INT NOT NULL," +
-                "description VARCHAR(1000) NOT NULL," +
-                "est_realise BOOLEAN NOT NULL," +
+                "description VARCHAR(1000) ," +
+                "est_realise BOOLEAN ," +
                 "PRIMARY KEY(id_objectif)," +
                 "FOREIGN KEY(id_projet) REFERENCES Projet(id_projet))");
 
         creationTable(NOMDB, "CREATE TABLE AvancementObjectif(" +
                 "id_avancement INT NOT NULL," +
                 "id_objectif INT NOT NULL," +
-                "date_mise_a_jour DATE NOT NULL," +
-                "avancement VARCHAR(15) CHECK (avancement = 'En cours' OR avancement = 'Terminé' OR avancement = 'A faire') NOT NULL," +
+                "date_mise_a_jour DATE ," +
+                "avancement VARCHAR(15) CHECK (avancement = 'En cours' OR avancement = 'Terminé' OR avancement = 'A faire') ," +
                 "PRIMARY KEY(id_avancement)," +
                 "FOREIGN KEY(id_objectif) REFERENCES Objectif(id_objectif))");
 
         creationTable(NOMDB, "CREATE TABLE RessourcesMaterielles(" +
                 "id_ressource_mat INT NOT NULL," +
                 "id_projet INT NOT NULL," +
-                "nom_ressource_mat VARCHAR(100) NOT NULL," +
-                "quantite INT NOT NULL," +
+                "nom_ressource_mat VARCHAR(100) ," +
+                "quantite INT ," +
                 "PRIMARY KEY(id_ressource_mat)," +
                 "FOREIGN KEY(id_projet) REFERENCES Projet(id_projet))");
 
@@ -114,7 +114,7 @@ public class CreationBD {
                 "id_ressource_log INT NOT NULL," +
                 "id_projet INT NOT NULL," +
                 "nom_ressource_log VARCHAR(100)," +
-                "version VARCHAR(100) NOT NULL," +
+                "version VARCHAR(100) ," +
                 "PRIMARY KEY(id_ressource_log)," +
                 "FOREIGN KEY(id_projet) REFERENCES Projet(id_projet))");
 
@@ -122,8 +122,8 @@ public class CreationBD {
                 "id_message INT NOT NULL," +
                 "id_projet INT NOT NULL," +
                 "id_membre_envoyeur INT NOT NULL," +
-                "contenu VARCHAR(5000) NOT NULL," +
-                "date_envoi DATE NOT NULL," +
+                "contenu VARCHAR(5000) ," +
+                "date_envoi DATE ," +
                 "PRIMARY KEY(id_message)," +
                 "FOREIGN KEY(id_projet) REFERENCES Projet(id_projet)," +
                 "FOREIGN KEY(id_membre_envoyeur) REFERENCES Membre(id_membre))");
@@ -132,10 +132,40 @@ public class CreationBD {
                 "id_message INT NOT NULL," +
                 "id_membre_envoyeur INT NOT NULL," +
                 "id_membre_destinataire INT NOT NULL," +
-                "contenu VARCHAR(5000) NOT NULL," +
-                "date_envoi DATE NOT NULL," +
+                "contenu VARCHAR(5000) ," +
+                "date_envoi DATE ," +
                 "PRIMARY KEY(id_message)," +
                 "FOREIGN KEY(id_membre_envoyeur) REFERENCES Membre(id_membre)," +
                 "FOREIGN KEY(id_membre_destinataire) REFERENCES Membre(id_membre))");
+
+        creationTable(NOMDB, "CREATE TABLE Document(" +
+                "id_document INT NOT NULL," +
+                "id_projet INT NOT NULL," +
+                "id_membre_upload INT NOT NULL," +
+                "chemin_document VARCHAR(150)," +
+                "contenu BLOB," +
+                "PRIMARY KEY(id_document)," +
+                "FOREIGN KEY (id_projet) REFERENCES Projet(id_projet)," +
+                "FOREIGN KEY (id_membre_upload) REFERENCES Membre(id_membre))");
+
+        creationTable(NOMDB, "CREATE TABLE Authentification(" +
+                "id_auth INT NOT NULL," +
+                "id_membre INT NOT NULL," +
+                "nom_utilisateur VARCHAR(50) DEFAULT 'Anonyme' ," +
+                "mdp VARCHAR(64) ," +
+                "est_connecte BOOLEAN ," +
+                "est_admin BOOLEAN  DEFAULT false," +
+                "PRIMARY KEY(id_auth)," +
+                "FOREIGN KEY(id_membre) REFERENCES Membre(id_membre))");
+
+
+
+        Projet projet1 = new Projet(1, "SAE de BD","Faire une BD avec Derby", "SQL, Java", new Date(2024-1900, 1, 16), new Date(2025-1900,7,7));
+        Projet projet2 = new Projet(1, "SAE de BD2","Faire une BD avec Derby", "SQL, Java", new Date(2024-1900, 1, 16), new Date(2025-1900,7,7));
+        Projet projet3 = new Projet(1, "SAE de BD3","Faire une BD avec Derby", "SQL, Java", new Date(2024-1900, 1, 16), new Date(2025-1900,7,7));
+        projet1.ajoutBD(NOMDB);
+        projet2.ajoutBD(NOMDB);
+        projet3.ajoutBD(NOMDB);
+        Requetes.afficherContenuTable(NOMDB, "Projet");
     }
 }
