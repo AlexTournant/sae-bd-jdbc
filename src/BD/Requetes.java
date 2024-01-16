@@ -28,6 +28,27 @@ public class Requetes {
         }
 	}
 
+	public static boolean updateAvancementObjectif(String nomBD, String avance, int id_obj) throws SQLException{
+		Connection connexion = null;
+        try {
+            connexion = CreationBD.connexionBD(nomDB);
+        	if (avance == 'En cours' || avance || 'Terminé' || avance = 'A faire') {
+        		var query = connexion.prepareStatement("UPDATE AvancementObjectif SET AvancementObjectif.avancement = "avance + " WHERE AvancementObjectif.id_objectif = "+id_obj);
+        		query.executeUpdate();
+        		return true;
+        	}
+        } catch(SQLException e) {
+            e.printStackTrace();
+            System.exit(1);
+        } finally {
+            CreationBD.fermerConnexion(connexion);
+        }
+        return false;
+    }
+		
+	}
+	
+	
 /* Exemples
     public static void nosClients(String nomDB) throws SQLException {
         Connection connexion = null;
