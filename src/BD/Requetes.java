@@ -4,6 +4,7 @@ import java.sql.*;
 
 public class Requetes {
 
+
 /* Exemples
     public static void nosClients(String nomDB) throws SQLException {
         Connection connexion = null;
