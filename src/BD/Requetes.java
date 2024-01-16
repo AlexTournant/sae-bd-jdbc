@@ -32,7 +32,7 @@ public class Requetes {
 		Connection connexion = null;
         try {
             connexion = CreationBD.connexionBD(nomDB);
-        	if (avance == 'En cours' || avance || 'Terminé' || avance = 'A faire') {
+        	if (avance == 'En cours' || avance == 'Terminé' || avance == 'A faire') {
         		var query = connexion.prepareStatement("UPDATE AvancementObjectif SET AvancementObjectif.avancement = "avance + " WHERE AvancementObjectif.id_objectif = "+id_obj);
         		query.executeUpdate();
         		return true;
