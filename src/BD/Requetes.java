@@ -5,24 +5,35 @@ import java.sql.*;
 public class Requetes {
 
 
-/* Exemples
-    public static void nosClients(String nomDB) throws SQLException {
+
+    public static void afficherContenuTable(String nomDB, String nomTable) {
         Connection connexion = null;
         try {
             connexion = CreationBD.connexionBD(nomDB);
-            var query = connexion.prepareStatement("SELECT DISTINCT * FROM Client");
-            ResultSet res = query.executeQuery();
-            while(res.next()){
-                System.out.println(res.getInt("id") + " " + res.getString("nom") + " " + res.getString("prenom") + " " + res.getInt("age"));
+            String sql = "SELECT * FROM " + nomTable;
+
+            try (PreparedStatement statement = connexion.prepareStatement(sql);
+                 ResultSet resultSet = statement.executeQuery()) {
+
+                ResultSetMetaData metaData = resultSet.getMetaData();
+                int colonneCount = metaData.getColumnCount();
+
+                while (resultSet.next()) {
+                    for (int i = 1; i <= colonneCount; i++) {
+                        String nomColonne = metaData.getColumnName(i);
+                        Object valeurColonne = resultSet.getObject(i);
+                        System.out.println(nomColonne + ": " + valeurColonne);
+                    }
+                    System.out.println();
+                }
             }
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-            System.exit(1);
         } finally {
             CreationBD.fermerConnexion(connexion);
         }
     }
-
+/*
     public static void nosClientsAdultes(String nomDB) throws SQLException {
         Connection connexion = null;
         try {
