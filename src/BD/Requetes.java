@@ -1,8 +1,67 @@
 package BD;
 
+import Model.*;
+
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Requetes {
+
+    public static List<Objectif> getObjectifsNonRealisesParProjet(String nomDB, int idProjet) {
+        List<Objectif> objectifsRealises = new ArrayList<>();
+
+        try (Connection connexion = CreationBD.connexionBD(nomDB)) {
+            String sql = "SELECT * FROM Objectif WHERE id_projet = ? AND est_realise = false";
+            try (PreparedStatement statement = connexion.prepareStatement(sql)) {
+                statement.setInt(1, idProjet);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        int idObjectif = resultSet.getInt("id");
+                        String description = resultSet.getString("description");
+                        boolean estRealise = resultSet.getBoolean("est_realise");
+
+                        Objectif objectif = new Objectif(idObjectif, idProjet, description, estRealise);
+                        objectifsRealises.add(objectif);
+
+                        System.out.println(objectif.toString());
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return objectifsRealises;
+    }
+
+    public static List<Objectif> getObjectifsRealisesParProjet(String nomDB, int idProjet) {
+        List<Objectif> objectifsRealises = new ArrayList<>();
+
+        try (Connection connexion = CreationBD.connexionBD(nomDB)) {
+            String sql = "SELECT * FROM Objectif WHERE id_projet = ? AND est_realise = true";
+            try (PreparedStatement statement = connexion.prepareStatement(sql)) {
+                statement.setInt(1, idProjet);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        int idObjectif = resultSet.getInt("id");
+                        String description = resultSet.getString("description");
+                        boolean estRealise = resultSet.getBoolean("est_realise");
+
+                        Objectif objectif = new Objectif(idObjectif, idProjet, description, estRealise);
+                        objectifsRealises.add(objectif);
+
+                        System.out.println(objectif.toString());
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return objectifsRealises;
+    }
+
 
     public static void deleteMember(String nomDB, int idMembre, int idProjet) throws SQLException {
         Connection connexion = null;
@@ -156,7 +215,7 @@ public class Requetes {
 		Connection connexion = null;
         try {
             connexion = CreationBD.connexionBD(nomBD);
-            var query = connexion.prepareStatement("SELECT DISTINCT id_objectif, est_realise FROM Objectif WHERE id_projet = " + idProjet);
+            var query = connexion.prepareStatement("SELECT DISTINCT id, est_realise FROM Objectif WHERE id_projet = " + idProjet);
             ResultSet res = query.executeQuery();
             while(res.next()){
                 System.out.println(res.getInt("id") + " " + res.getBoolean("est_realise"));

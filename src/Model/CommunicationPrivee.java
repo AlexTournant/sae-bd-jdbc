@@ -6,8 +6,6 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class CommunicationPrivee extends Entite {
 
@@ -32,7 +30,7 @@ public class CommunicationPrivee extends Entite {
 
             if (!isInDatabase(nomDB, "CommunicationPrivee")) {
 
-                String sql = "INSERT INTO CommunicationPrivee (id_message, id_membre_envoyeur, id_membre_destinataire, contenu, date_envoi) VALUES (?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO CommunicationPrivee (id, id_membre_envoyeur, id_membre_destinataire, contenu, date_envoi) VALUES (?, ?, ?, ?, ?)";
 
                 try (PreparedStatement s = connexion.prepareStatement(sql)) {
                     s.setInt(1, getId(nomDB, "CommunicationPrivee"));
