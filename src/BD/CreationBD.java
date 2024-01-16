@@ -174,6 +174,7 @@ public class CreationBD {
 
         Objectif o1 = new Objectif(1, 1, "Test 1 pour l'objectif 1", false);
         Objectif o2 = new Objectif(1, 1, "Test 2 pour l'objectif 1", true);
+        Authentification auth=new Authentification(1,1,"alex","tournant",false,false);
 
 
         projet1.ajoutBD(NOMDB);
@@ -201,6 +202,7 @@ public class CreationBD {
 
         Requetes.getObjectifsNonRealisesParProjet(NOMDB, 1);
         Requetes.getObjectifsRealisesParProjet(NOMDB, 1);
+        auth.ajoutBD(NOMDB);
 
     }
 }
