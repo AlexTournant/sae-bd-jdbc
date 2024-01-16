@@ -10,7 +10,7 @@ public class Requetes {
 		try {
             connexion = CreationBD.connexionBD(nomDB);
             // Reste a crypter le mot de passe
-            var query = connexion.prepareStatement("SELECT id_membre FROM Auth WHERE Auth.nom = "+ name + " AND Auth.mdp = "+ password);
+            var query = connexion.prepareStatement("SELECT id_membre FROM Auth WHERE Auth.nom_utilisateur = "+ name + " AND Auth.mdp = "+ password);
             ResultSet res = query.executeQuery();
             int id = null;
             try {
