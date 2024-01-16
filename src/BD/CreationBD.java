@@ -66,7 +66,7 @@ public class CreationBD {
         creationTable(NOMDB,"CREATE TABLE Projet("
                 + "id_projet INT NOT NULL,"
                 + "sujet VARCHAR(100) NOT NULL,"
-                + "technologies_utilisees VARCHAR(100) NOT NULL,"
+                + "technologies_utilisees VARCHAR(50) NOT NULL,"
                 + "date_debut DATE NOT NULL,"
                 + "date_fin DATE NOT NULL,"
                 + "PRIMARY KEY(id_projet))");
