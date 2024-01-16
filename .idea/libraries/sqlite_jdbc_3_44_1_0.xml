@@ -1,0 +1,21 @@
+<component name="libraryTable">
+  <library name="sqlite-jdbc-3.44.1.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../sqlite-jdbc-3.44.1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/db-derby-10.16.1.1-bin/lib/derbytools.jar!/" />
+      <root url="jar://$PROJECT_DIR$/db-derby-10.16.1.1-bin/lib/derby.jar!/" />
+      <root url="jar://$PROJECT_DIR$/db-derby-10.16.1.1-bin/lib/derbyshared.jar!/" />
+      <root url="file://$PROJECT_DIR$" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/db-derby-10.16.1.1-bin/demo/programs" />
+      <root url="file://$PROJECT_DIR$/db-derby-10.16.1.1-bin/demo/programs/scores/java/client" />
+      <root url="file://$PROJECT_DIR$/db-derby-10.16.1.1-bin/demo/programs/scores/java/common" />
+      <root url="file://$PROJECT_DIR$/db-derby-10.16.1.1-bin/demo/programs/scores/java/server" />
+      <root url="file://$PROJECT_DIR$/db-derby-10.16.1.1-bin/demo/programs/simple" />
+      <root url="file://$PROJECT_DIR$/db-derby-10.16.1.1-bin/demo/programs/vtis/java" />
+      <root url="file://$PROJECT_DIR$/src" />
+    </SOURCES>
+  </library>
+</component>
