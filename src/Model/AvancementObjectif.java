@@ -5,18 +5,19 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class AvancementObjectif extends Entite{
     private int idObjectif;
-    long millis=System.currentTimeMillis();
     private Date dateMaj;
     private String avancement;
 
-    public AvancementObjectif(int id, int idObjectif, String avancement) {
+    public AvancementObjectif(int id, int idObjectif, Date dateMaj, String avancement) {
         super(id);
         this.idObjectif = idObjectif;
-        this.dateMaj = dateMaj = new Date(millis);
+        this.dateMaj = dateMaj;
         this.avancement = avancement;
     }
 

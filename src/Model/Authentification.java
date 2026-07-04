@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Authentification extends Entite {
@@ -41,14 +43,15 @@ public class Authentification extends Entite {
         try {
             connexion = CreationBD.connexionBD(nomDB);
             if (!isInDatabase(nomDB, "Authentification")) {
-                String sql = "INSERT INTO Authentification (id, id_membre, mdp, est_connecte, est_admin) VALUES (?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO Authentification (id, id_membre,nom_utilisateur, mdp, est_connecte, est_admin) VALUES (?, ?,?, ?, ?, ?)";
 
                 try (PreparedStatement s = connexion.prepareStatement(sql)) {
                     s.setInt(1, getId(nomDB, "Authentification"));
                     s.setInt(2, id_membre);
-                    s.setString(3, mdp);
-                    s.setBoolean(4, est_connecte);
-                    s.setBoolean(4, est_admin);
+                    s.setString(3,nom_utilisateur);
+                    s.setString(4, mdp);
+                    s.setBoolean(5, est_connecte);
+                    s.setBoolean(6, est_admin);
                     s.executeUpdate();
                 }
             } else {

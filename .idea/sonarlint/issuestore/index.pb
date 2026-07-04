@@ -5,3 +5,19 @@ I
 src/BD/RemplissageBD.java,9\3\93ca4d17b54538c60cc5bb2e3875f1708af7a3cc
 D
 src/BD/Requetes.java,3\8\38f30dd3d08c4938a66d2267f8c78614ae06db8f
+T
+$DB-SAE/README_DO_NOT_TOUCH_FILES.txt,c\8\c8fae3f8d1797e3c8f730560dcae320fdfe36eab
+B
+src/main/Main.java,f\e\fe03b4fd3afe162c6e01309b98a22588e093d274
+O
+src/Model/Authentification.java,4\c\4c0cc1223f1e7386aac4057596831ea5597fe2c6
+9
+	derby.log,a\7\a7c30820953d3058ae34d7c1d585aa37740d72d5
+K
+src/Model/ProjetMembre.java,3\6\36f81978a5042abff6f4d5c7ee4d9d6a24e5413d
+E
+src/Model/Projet.java,c\1\c1ee87ff5a98cfdbefae79e2c5ee77f0315f226c
+T
+$src/Model/RessourcesLogicielles.java,0\1\0134bf491ca7a2a552415f2799b78693cc26c7d7
+G
+src/Model/Objectif.java,5\3\531ff26d05209533632abf663a04e5192396eada

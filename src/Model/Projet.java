@@ -10,14 +10,16 @@ public class Projet extends Entite {
     private String technologiesUtilisees;
     private Date dateDebut;
     private Date dateFin;
+    private boolean estPublic;
 
-    public Projet(int id, String nom_projet, String sujet, String technologiesUtilisees, Date dateDebut, Date dateFin) {
+    public Projet(int id, String nom_projet, String sujet, String technologiesUtilisees, Date dateDebut, Date dateFin, boolean estPublic) {
         super(id);
         this.nom_projet = nom_projet;
         this.sujet = sujet;
         this.technologiesUtilisees = technologiesUtilisees;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
+        this.estPublic = estPublic;
     }
 
     @Override
@@ -28,6 +30,7 @@ public class Projet extends Entite {
                 ", technologies_utilisees='" + technologiesUtilisees + '\'' +
                 ", date_debut=" + dateDebut +
                 ", date_fin=" + dateFin +
+                ", est_public=" + estPublic +
                 '}';
     }
 
@@ -38,7 +41,7 @@ public class Projet extends Entite {
         Connection connexion = null;
         try {
             connexion = CreationBD.connexionBD(nomDB);
-            String sql = "INSERT INTO Projet (id, nom_projet, sujet, technologies_utilisees, date_debut, date_fin) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO Projet (id, nom_projet, sujet, technologies_utilisees, date_debut, date_fin,estPublic) VALUES (?, ?, ?, ?, ?, ?, ?)";
             System.out.println(sql);
             try (PreparedStatement s = connexion.prepareStatement(sql)) {
                 s.setInt(1, getId(nomDB, "Projet"));
@@ -47,7 +50,7 @@ public class Projet extends Entite {
                 s.setString(4, this.technologiesUtilisees);
                 s.setDate(5, this.dateDebut);
                 s.setDate(6, this.dateFin);
-
+                s.setBoolean(7, this.estPublic);
                 s.executeUpdate();
 
             }
@@ -57,5 +60,9 @@ public class Projet extends Entite {
             CreationBD.fermerConnexion(connexion);
         }
 
+    }
+
+    public String getNom_projet() {
+        return nom_projet;
     }
 }

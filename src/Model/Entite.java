@@ -3,6 +3,7 @@ package Model;
 import BD.CreationBD;
 
 import java.sql.*;
+import java.util.Map;
 
 public abstract class Entite {
 

@@ -68,6 +68,7 @@ public class CreationBD {
                 + "technologies_utilisees VARCHAR(50) ,"
                 + "date_debut DATE ,"
                 + "date_fin DATE,"
+                + "estPublic BOOLEAN DEFAULT false,"
                 + "PRIMARY KEY(id))");
 
         creationTable(NOMDB, "CREATE TABLE Membre(" +
@@ -79,7 +80,7 @@ public class CreationBD {
         creationTable(NOMDB, "CREATE TABLE ProjetMembre(" +
                 "id_projet INT NOT NULL," +
                 "id_membre INT NOT NULL," +
-                "est_responsable BOOLEAN ," +
+                "est_responsable BOOLEAN DEFAULT false," +
                 "PRIMARY KEY(id_projet, id_membre)," +
                 "FOREIGN KEY(id_projet) REFERENCES Projet(id)," +
                 "FOREIGN KEY(id_membre) REFERENCES Membre(id))");
@@ -88,7 +89,7 @@ public class CreationBD {
                 "id INT NOT NULL," +
                 "id_projet INT NOT NULL," +
                 "description VARCHAR(1000) ," +
-                "est_realise BOOLEAN ," +
+                "est_realise BOOLEAN DEFAULT false," +
                 "PRIMARY KEY(id)," +
                 "FOREIGN KEY(id_projet) REFERENCES Projet(id))");
 
@@ -158,9 +159,9 @@ public class CreationBD {
 
 
 
-        Projet projet1 = new Projet(1, "SAE de BD","Faire une BD avec Derby", "SQL, Java", new Date(2024-1900, 1, 16), new Date(2025-1900,7,7));
-        Projet projet2 = new Projet(1, "SAE de BD2","Faire une BD avec Derby", "SQL, Java", new Date(2024-1900, 1, 16), new Date(2025-1900,7,7));
-        Projet projet3 = new Projet(1, "SAE de BD3","Faire une BD avec Derby", "SQL, Java", new Date(2024-1900, 1, 16), new Date(2025-1900,7,7));
+        Projet projet1 = new Projet(1, "SAE de BD","Faire une BD avec Derby", "SQL, Java", new Date(2024-1900, 1, 16), new Date(2025-1900,7,7), true);
+        Projet projet2 = new Projet(2, "SAE de BD2","Faire une BD avec Derby", "SQL, Java", new Date(2024-1900, 1, 16), new Date(2025-1900,7,7), true);
+        Projet projet3 = new Projet(3, "SAE de BD3","Faire une BD avec Derby", "SQL, Java", new Date(2024-1900, 1, 16), new Date(2025-1900,7,7), true);
 
         Membre membre1 = new Membre(1, "DEMORY", "Maël");
         Membre membre2 = new Membre(2, "TOURNANT", "Alex");
@@ -192,8 +193,8 @@ public class CreationBD {
         o1.ajoutBD(NOMDB);
         o2.ajoutBD(NOMDB);
 
-        Requetes.deleteMember(NOMDB,3, 1);
-        Requetes.passerMembreResponsable(NOMDB, 1, 1);
+//        Requetes.deleteMember(NOMDB,3, 1);
+//        Requetes.passerMembreResponsable(NOMDB, 1, 1);
 
         Requetes.afficherContenuTable(NOMDB, "Projet");
         Requetes.afficherContenuTable(NOMDB, "Membre");

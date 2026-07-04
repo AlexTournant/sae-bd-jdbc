@@ -118,9 +118,9 @@ public class Requetes {
         Connection connexion = null;
         try {
             connexion = CreationBD.connexionBD(nomDB);
-            String sql = "SELECT Membre.id_membre, Membre.nom, Membre.prenom, ProjetMembre.est_responsable " +
+            String sql = "SELECT Membre.id, Membre.nom, Membre.prenom, ProjetMembre.est_responsable " +
                     "FROM Membre " +
-                    "JOIN ProjetMembre ON Membre.id_membre = ProjetMembre.id_membre " +
+                    "JOIN ProjetMembre ON Membre.id = ProjetMembre.id_membre " +
                     "WHERE ProjetMembre.id_projet = ?";
 
             try (PreparedStatement statement = connexion.prepareStatement(sql)) {
@@ -129,11 +129,10 @@ public class Requetes {
 
                 System.out.println("Membres associés au projet avec ID " + idProjet + " :");
                 while (resultSet.next()) {
-                    int idMembre = resultSet.getInt("id_membre");
+                    int idMembre = resultSet.getInt("id");
                     String nom = resultSet.getString("nom");
                     String prenom = resultSet.getString("prenom");
                     boolean estResponsable = resultSet.getBoolean("est_responsable");
-
                     System.out.println("ID Membre: " + idMembre + ", Nom: " + nom + ", Prénom: " + prenom + ", Responsable: " + estResponsable);
                 }
             }
@@ -285,7 +284,7 @@ public class Requetes {
                 String technologies_utilisees = resultSet.getString("technologies_utilisees");
                 Date date_debut = resultSet.getDate("date_debut");
                 Date date_fin = resultSet.getDate("date_fin");
-                return new Projet(id_projet,nomProjet,sujet,technologies_utilisees,date_debut,date_fin);
+                return new Projet(id_projet,nomProjet,sujet,technologies_utilisees,date_debut,date_fin, true);
             }
             return null;
         }} catch (SQLException e) {
@@ -294,28 +293,31 @@ public class Requetes {
 
         }
     }
-//    public static Projet allProjectPublic(String nomDB) {
-//        Connection connexion = null;
-//        try {
-//            connexion = CreationBD.connexionBD(nomDB);
-//            String sql = "select * from Projet where Projet.public=true";
-//            try (PreparedStatement statement = connexion.prepareStatement(sql);
-//                 ResultSet resultSet = statement.executeQuery()) {
-//            while (resultSet.next()) {
-//                // Retrieve the value of the column "nom_projet" for each row
-//                int id_r=resultSet.getInt("id");
-//                int id_p=resultSet.getInt("id_projet");
-//                String nom_ressource_log = resultSet.getString("nom_ressource_log");
-//                String version = resultSet.getString("version");
-//                return new Projet(id_projet,nomProjet,sujet,technologies_utilisees,date_debut,date_fin);
-//            }
-//            return null;
-//        }} catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        } finally {
-//
-//        }
-//    }
+    public static List<Projet> allProjectPublic(String nomDB) {
+        Connection connexion = null;
+        try {
+            connexion = CreationBD.connexionBD(nomDB);
+            List<Projet> tab = new ArrayList<>();
+            String sql = "select * from Projet where Projet.estPublic=true";
+            try (PreparedStatement statement = connexion.prepareStatement(sql);
+                 ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                int id_projet=resultSet.getInt("id");
+                String nomProjet = resultSet.getString("nom_projet");
+                String sujet = resultSet.getString("sujet");
+                String technologies_utilisees = resultSet.getString("technologies_utilisees");
+                Date date_debut = resultSet.getDate("date_debut");
+                Date date_fin = resultSet.getDate("date_fin");
+                Boolean estPublic = resultSet.getBoolean("estPublic");
+                tab.add(new Projet(id_projet,nomProjet,sujet,technologies_utilisees,date_debut,date_fin, estPublic));
+            }
+            return tab;
+        }} catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+
+        }
+    }
     public static List<RessourcesLogicielles> allResourceLogicielProjet(int id,String nomDB) {
         Connection connexion = null;
         try {
@@ -384,6 +386,52 @@ public class Requetes {
         }
     } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean EnvoieMessagePrive(int idExpediteur,String message ,int idDestinataire,String nomDB) throws SQLException {
+        Connection connexion = null;
+        try {
+            connexion = CreationBD.connexionBD(nomDB);
+            List<String> tab = new ArrayList<>();
+            String sql = "insert value into CommunicationPrivee where Projet.id=" + Integer.toString(idProjet) + "";
+            try (PreparedStatement statement = connexion.prepareStatement(sql);
+                 ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    // Retrieve the value of the column "nom_projet" for each row
+                    String nomProjet = resultSet.getString("nom_projet");
+
+                    // Do something with the retrieved value
+                    tab.add(nomProjet);
+                }
+                System.out.println("le message a été envoyer");
+                return true;
+            }
+        } finally {
+
+            }
+    }
+
+    public static boolean EnvoieMessageForum(int idProjet,int idExpediteur,String message,String nomDB) throws SQLException {
+        Connection connexion = null;
+        try {
+            connexion = CreationBD.connexionBD(nomDB);
+            List<String> tab = new ArrayList<>();
+            String sql = "insert value into CommunicationPrivee where Projet.id=" + Integer.toString(idProjet) + "";
+            try (PreparedStatement statement = connexion.prepareStatement(sql);
+                 ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    // Retrieve the value of the column "nom_projet" for each row
+                    String nomProjet = resultSet.getString("nom_projet");
+
+                    // Do something with the retrieved value
+                    tab.add(nomProjet);
+                }
+                System.out.println("le message a été envoyer");
+                return true;
+            }
+        } finally {
+
         }
     }
 }

@@ -1,11 +1,11 @@
 ----------------------------------------------------------------
-Tue Jan 16 09:31:38 CET 2024:
-Amorçage de Derby version The Apache Software Foundation - Apache Derby - 10.16.1.1 - (1901046) : instance a816c00e-018d-1165-c277-000006c886a8 
-dans le répertoire de base de données C:\Users\maeld\Documents\BUT2\BD_JDBC\SAE BD JDBC\DB-tp2 avec le chargeur de classe jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
-Chargé de file:/C:/Users/maeld/Documents/BUT2/BD_JDBC/SAE%20BD%20JDBC/db-derby-10.16.1.1-bin/lib/derby.jar
+Sun Mar 10 17:01:49 CET 2024:
+Amorçage de Derby version The Apache Software Foundation - Apache Derby - 10.16.1.1 - (1901046) : instance a816c00e-018e-2919-5066-00000ec37bf8 
+dans le répertoire de base de données C:\Users\Alex\Downloads\BUT1\sae\saeBD\sae-bd-jdbc\DB-SAE avec le chargeur de classe jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528
+Chargé de file:/C:/Users/Alex/Downloads/BUT1/sae/saeBD/sae-bd-jdbc/db-derby-10.16.1.1-bin/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=21.0.1+12-29
-user.dir=C:\Users\maeld\Documents\BUT2\BD_JDBC\SAE BD JDBC
+user.dir=C:\Users\Alex\Downloads\BUT1\sae\saeBD\sae-bd-jdbc
 os.name=Windows 11
 os.arch=amd64
 os.version=10.0
