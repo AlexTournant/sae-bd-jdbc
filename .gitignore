@@ -1,4 +1,13 @@
+### Dependencies / binaires téléchargés ###
+node_modules/
+db-derby-*/
+
+### Données générées (base Derby embarquée) ###
+DB-SAE/
+derby.log
+
 ### IntelliJ IDEA ###
+.idea/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
